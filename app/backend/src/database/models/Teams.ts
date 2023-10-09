@@ -33,3 +33,5 @@ Teams.init({
   underscored: true,
   timestamps: false,
 });
+
+export default Teams;

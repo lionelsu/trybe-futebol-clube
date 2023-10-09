@@ -39,10 +39,9 @@ export default {
         },
       },
       awayTeamGoals: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.INTEGER,
         allowNull: false,
-        field: 'in_progress',
-        defaultValue: true,
+        field: 'away_team_goals',
       },
       inProgress: {
         type: DataTypes.BOOLEAN,
