@@ -6,8 +6,6 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import Teams from '../database/models/Teams';
 
-import { Response } from 'superagent';
-
 chai.use(chaiHttp);
 
 const { expect } = chai;
@@ -27,7 +25,7 @@ const teams = [
   },
 ]
 
-describe('Testes para a roda /teams', function () {
+describe('Testes para a rota /teams', function () {
   afterEach(function () {
     sinon.restore();
   });
@@ -44,7 +42,7 @@ describe('Testes para a roda /teams', function () {
   it('Deve retornar o time com o id correto', async function () {
     sinon.stub(Teams, 'findByPk').resolves(Teams.build(teams[0]));
 
-    const response = await chai.request(app).get('/teams/:id');
+    const response = await chai.request(app).get('/teams/1');
     expect(response.status).to.be.equal(200);
     expect(response.body).to.be.deep.equal(teams[0]);
   });
