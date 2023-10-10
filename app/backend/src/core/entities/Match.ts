@@ -1,4 +1,4 @@
-export interface IMatch {
+export interface Match {
   id: number;
   homeTeamId: number;
   homeTeamGoals: number;

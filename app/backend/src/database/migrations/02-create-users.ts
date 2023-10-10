@@ -1,10 +1,10 @@
 'use strict';
 import { DataTypes, Model, QueryInterface } from 'sequelize';
-import { IUser } from '../../Interfaces/IUser';
+import { User } from '../../core/entities/User';
 
 export default {
   up(queryInterface: QueryInterface) {
-    return queryInterface.createTable<Model<IUser>>('users', {
+    return queryInterface.createTable<Model<User>>('users', {
       id: {
         type: DataTypes.INTEGER,
         allowNull: false,

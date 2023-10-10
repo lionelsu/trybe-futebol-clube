@@ -1,10 +1,10 @@
 'use strict';
 import { DataTypes, Model, QueryInterface } from 'sequelize';
-import { ITeam } from '../../Interfaces/ITeam';
+import { Team } from '../../core/entities/Team';
 
 export default {
   up(queryInterface: QueryInterface) {
-    return queryInterface.createTable<Model<ITeam>>('teams', {
+    return queryInterface.createTable<Model<Team>>('teams', {
       id: {
         type: DataTypes.INTEGER,
         allowNull: false,
