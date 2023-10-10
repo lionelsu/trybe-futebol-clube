@@ -40,4 +40,12 @@ describe('Testes para a roda /teams', function () {
     expect(response.body).to.be.an('array'); 
     expect(response.body).to.be.deep.equal(teams);
   });
+
+  it('Deve retornar o time com o id correto', async function () {
+    sinon.stub(Teams, 'findByPk').resolves(Teams.build(teams[0]));
+
+    const response = await chai.request(app).get('/teams/:id');
+    expect(response.status).to.be.equal(200);
+    expect(response.body).to.be.deep.equal(teams[0]);
+  });
 });

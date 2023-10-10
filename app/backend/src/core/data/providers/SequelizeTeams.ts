@@ -9,6 +9,10 @@ class SequelizeTeams implements TeamRepository {
     const teamsData = await this.teams.findAll();
     return teamsData.map((team) => team.toJSON());
   }
+
+  async findById(id: number): Promise<Team | null> {
+    return this.teams.findByPk(id);
+  }
 }
 
 export default SequelizeTeams;

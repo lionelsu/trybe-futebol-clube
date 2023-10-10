@@ -11,6 +11,10 @@ class TeamService {
   async findAll(): Promise<Team[]> {
     return this.teamRepository.findAll();
   }
+
+  async findById(id: number): Promise<Team | null> {
+    return this.teamRepository.findById(id);
+  }
 }
 
 export default TeamService;
