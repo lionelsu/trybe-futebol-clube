@@ -2,6 +2,7 @@ import { Match } from '../../entities/Match';
 import Matches from '../../../database/models/Matches';
 import { MatchRepository } from '../repositories/MatchRepository';
 import Teams from '../../../database/models/Teams';
+import AppError from '../../../utils/AppError';
 
 class SequelizeMatches implements MatchRepository {
   private matches = Matches;
@@ -44,7 +45,14 @@ class SequelizeMatches implements MatchRepository {
   }
 
   async createMatch(match: Omit<Match, 'id'>): Promise<Match> {
+    const homeTeam = await Teams.findByPk(match.homeTeamId);
+    const awayTeam = await Teams.findByPk(match.awayTeamId);
+
+    if (!homeTeam || !awayTeam) {
+      throw new AppError('There is no team with such id!');
+    }
     const newMatch = await this.matches.create(match);
+
     return newMatch.toJSON();
   }
 }
