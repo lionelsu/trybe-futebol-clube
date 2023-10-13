@@ -13,6 +13,9 @@ const matchesRouter = Router();
 matchesRouter.get('/', (req: Request, res: Response) =>
   matchesController.findAll(req, res));
 
+matchesRouter.patch('/:id', authMiddleware, (req: Request, res: Response) =>
+  matchesController.updateMatch(req, res));
+
 matchesRouter.patch('/:id/finish', authMiddleware, (req: Request, res: Response) =>
   matchesController.finishMatch(req, res));
 

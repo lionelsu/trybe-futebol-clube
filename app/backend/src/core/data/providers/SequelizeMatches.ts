@@ -34,6 +34,14 @@ class SequelizeMatches implements MatchRepository {
     });
     return matchesData.map((match) => match.toJSON());
   }
+
+  async updateMatch(id: number, homeTeamGoals: number, awayTeamGoals: number): Promise<number> {
+    const [updatedMatch] = await this.matches.update(
+      { homeTeamGoals, awayTeamGoals },
+      { where: { id } },
+    );
+    return updatedMatch;
+  }
 }
 
 export default SequelizeMatches;

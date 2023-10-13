@@ -21,6 +21,18 @@ class MatchesController {
     await this.matchService.finishMatch(Number(id));
     res.status(200).json({ message: 'Finished' });
   }
+
+  async updateMatch(req: Request, res: Response) {
+    const { id } = req.params;
+    const { homeTeamGoals, awayTeamGoals } = req.body;
+    const isUpdatedMatch = await this.matchService
+      .updateMatch(Number(id), homeTeamGoals, awayTeamGoals);
+
+    if (!isUpdatedMatch) {
+      return res.status(400).json({ message: 'Match not found' });
+    }
+    res.status(200).json({ message: 'Updated' });
+  }
 }
 
 export default MatchesController;

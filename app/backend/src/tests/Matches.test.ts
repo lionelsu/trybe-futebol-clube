@@ -104,4 +104,22 @@ describe('Testes para a rota /matches', function () {
     expect(response.status).to.be.equal(200);
     expect(response.body).to.be.deep.equal({ "message": "Updated" });
   });
+
+  it('Deve ser retornar a mesnagem de erro caso não seja possível atualizar um jogo na rota /matches/:id', async function () {
+    sinon.stub(Users, 'findByPk').resolves(Users.build(authUser));
+    const jwt = new JWT();
+    const token = jwt.encrypt(authUser);
+
+    sinon.stub(Matches, 'findByPk').resolves(Matches.build(matchesMock[0]));
+    sinon.stub(Matches, 'update').resolves([0]);
+
+    const response = await chai
+      .request(app)
+      .patch('/matches/1')
+      .set('Authorization', `Bearer ${token}`)
+      .send('');
+    
+    expect(response.status).to.be.equal(400);
+    expect(response.body).to.be.deep.equal({ "message": "Match not found" });
+  });
 });

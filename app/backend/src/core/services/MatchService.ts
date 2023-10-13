@@ -19,6 +19,10 @@ class MatchService {
   async findByProgress(progress: boolean): Promise<Match[]> {
     return this.matchRepository.findByProgress(progress);
   }
+
+  async updateMatch(id: number, homeTeamGoals: number, awayTeamGoals: number): Promise<number> {
+    return this.matchRepository.updateMatch(id, homeTeamGoals, awayTeamGoals);
+  }
 }
 
 export default MatchService;
