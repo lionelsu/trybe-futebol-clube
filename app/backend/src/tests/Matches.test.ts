@@ -19,6 +19,22 @@ describe('Testes para a rota /matches', function () {
   })
 
   it('Deve retornar um lista com todos os jogos corretamente', async function () {
+    const remove = matchesMock.map(match => {
+      const { homeTeam, awayTeam, ...rest } = match;
+      return { ...rest };
+    })
+    
+    sinon.stub(Matches, 'findAll').resolves(Matches.bulkBuild(remove));
+
+    const response = await chai
+      .request(app)
+      .get('/matches');
+
+    expect(response.status).to.be.equal(200);
+    expect(response.body).to.be.deep.equal(remove);
+  });
+
+  it('Deve retornar um lista com todos os jogos corretamente', async function () {
     sinon.stub(SequelizeMatches.prototype, 'findAll').resolves(matchesMock);
 
     const response = await chai
@@ -35,7 +51,7 @@ describe('Testes para a rota /matches', function () {
 
     const response = await chai
       .request(app)
-      .post('/matches/1/finish')
+      .patch('/matches/1/finish')
 
     expect(response.status).to.be.equal(200);
     expect(response.body).to.be.deep.equal({ "message": "Finished" });
