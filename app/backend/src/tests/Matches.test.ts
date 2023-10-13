@@ -28,4 +28,16 @@ describe('Testes para a rota /matches', function () {
     expect(response.status).to.be.equal(200);
     expect(response.body).to.be.deep.equal(matchesMock);
   });
+
+  it('Deve ser possível finalizar um jogo pela rota /matches/:id/finish', async function () {
+    sinon.stub(Matches, 'findByPk').resolves(Matches.build(matchesMock[0]));
+    sinon.stub(Matches.prototype, 'update').resolves(Matches.build(matchesMock[0]));
+
+    const response = await chai
+      .request(app)
+      .post('/matches/1/finish')
+
+    expect(response.status).to.be.equal(200);
+    expect(response.body).to.be.deep.equal({ "message": "Finished" });
+  });
 });

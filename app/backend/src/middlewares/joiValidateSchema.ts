@@ -12,7 +12,6 @@ type JoiValidateFunc<T> =
 
 export const joiValidate: JoiValidateFunc<AnySchema> = (schema) => (req, res, next) => {
   const { error } = schema.validate(req.body);
-  console.log(error);
 
   return error ? next(error) : next();
 };

@@ -6,7 +6,6 @@ class MatchesController {
 
   async findAll(_req: Request, res: Response) {
     const matchesData = await this.matchService.findAll();
-    console.log(matchesData);
     res.status(200).json(matchesData);
   }
 }
