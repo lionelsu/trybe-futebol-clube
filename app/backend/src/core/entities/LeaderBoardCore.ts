@@ -67,11 +67,10 @@ class LeaderBoardCore {
       .toFixed(2)) || 0;
   }
 
-  private static laderBoardsByTeam(
-    homeTeam: LeaderBoard,
-    awayTeam: LeaderBoard,
-  ): LeaderBoard[] {
-    const result: LeaderBoard = {
+  private static leaderBoardsByTeam(homeTeam: LeaderBoard, awayTeams: LeaderBoard[]): LeaderBoard {
+    const awayTeam = awayTeams.find((team) => team.name === homeTeam.name);
+    if (!awayTeam) return homeTeam;
+    return {
       name: homeTeam.name,
       totalPoints: homeTeam.totalPoints + awayTeam.totalPoints,
       totalGames: homeTeam.totalGames + awayTeam.totalGames,
@@ -81,25 +80,19 @@ class LeaderBoardCore {
       goalsFavor: homeTeam.goalsFavor + awayTeam.goalsFavor,
       goalsOwn: homeTeam.goalsOwn + awayTeam.goalsOwn,
       goalsBalance: homeTeam.goalsBalance + awayTeam.goalsBalance,
-      efficiency: 0,
+      efficiency: parseFloat(
+        (((homeTeam.totalPoints + awayTeam.totalPoints)
+        / ((homeTeam.totalGames + awayTeam.totalGames) * 3)) * 100).toFixed(2),
+      ) || 0,
     };
-    result.efficiency = Number(result.efficiency.toFixed(2));
-    return [result];
   }
 
   static allLeaderBoard(
     homeTeams: LeaderBoard[],
     awayTeams: LeaderBoard[],
   ): LeaderBoard[] {
-    const allData: LeaderBoard[] = [];
-    homeTeams.forEach((homeTeam) => {
-      awayTeams.forEach((awayTeam) => {
-        if (homeTeam.name !== awayTeam.name) {
-          const [data] = LeaderBoardCore.laderBoardsByTeam(homeTeam, awayTeam);
-          allData.push(data);
-        }
-      });
-    });
+    const allData = homeTeams
+      .map((homeTeam) => LeaderBoardCore.leaderBoardsByTeam(homeTeam, awayTeams));
     return allData;
   }
 

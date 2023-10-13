@@ -9,6 +9,11 @@ class LeaderBoardController {
     const leaderBoard = await this.leaderBoardService.getLeaderBoard(path.substring(1));
     res.status(200).json(leaderBoard);
   }
+
+  async getAllLeaderBoards(req: Request, res: Response) {
+    const leaderBoards = await this.leaderBoardService.getAllLeaderBoards();
+    return res.status(200).json(leaderBoards);
+  }
 }
 
 export default LeaderBoardController;

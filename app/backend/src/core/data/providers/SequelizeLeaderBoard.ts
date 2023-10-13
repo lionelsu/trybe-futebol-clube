@@ -16,6 +16,14 @@ class SequelizeLeaderBoards {
     const sortLeaderBoard = LeaderBoardCore.sortLeaderboards(leaderBoard);
     return sortLeaderBoard;
   }
+
+  async getAllLeaderBoards(): Promise<LeaderBoard[]> {
+    const homeTeam = await this.getLeaderBoard('home');
+    const awayTeam = await this.getLeaderBoard('away');
+    const allTeamsLeaderBoard = LeaderBoardCore.allLeaderBoard(homeTeam, awayTeam);
+    const sortLeaderboards = LeaderBoardCore.sortLeaderboards(allTeamsLeaderBoard);
+    return sortLeaderboards;
+  }
 }
 
 export default SequelizeLeaderBoards;
