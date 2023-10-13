@@ -20,12 +20,17 @@ const authUser = {
   role: 'admin',
   email: 'fake@fake.com',
   password: 'fake@fake',
-}
+};
 
 const remove = matchesMock.map(match => {
   const { homeTeam, awayTeam, ...rest } = match;
   return { ...rest };
-})
+});
+
+const goals = {
+  "homeTeamGoals": 3,
+  "awayTeamGoals": 1
+};
 
 describe('Testes para a rota /matches', function () {
   afterEach(function () {
@@ -80,5 +85,23 @@ describe('Testes para a rota /matches', function () {
 
     expect(response.status).to.be.equal(200);
     expect(response.body).to.be.deep.equal({ "message": "Finished" });
+  });
+
+  it('Deve ser possível atualizar um jogo pela rota /matches/:id', async function () {
+    sinon.stub(Users, 'findByPk').resolves(Users.build(authUser));
+    const jwt = new JWT();
+    const token = jwt.encrypt(authUser);
+
+    sinon.stub(Matches, 'findByPk').resolves(Matches.build(matchesMock[0]));
+    sinon.stub(Matches, 'update').resolves([1]);
+
+    const response = await chai
+      .request(app)
+      .patch('/matches/1')
+      .set('Authorization', `Bearer ${token}`)
+      .send(goals);
+    
+    expect(response.status).to.be.equal(200);
+    expect(response.body).to.be.deep.equal({ "message": "Updated" });
   });
 });
