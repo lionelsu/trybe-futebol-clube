@@ -22,17 +22,17 @@ const authUser = {
   password: 'fake@fake',
 }
 
+const remove = matchesMock.map(match => {
+  const { homeTeam, awayTeam, ...rest } = match;
+  return { ...rest };
+})
+
 describe('Testes para a rota /matches', function () {
   afterEach(function () {
     sinon.restore();
   })
 
   it('Deve retornar um lista com todos os jogos corretamente', async function () {
-    const remove = matchesMock.map(match => {
-      const { homeTeam, awayTeam, ...rest } = match;
-      return { ...rest };
-    })
-    
     sinon.stub(Matches, 'findAll').resolves(Matches.bulkBuild(remove));
 
     const response = await chai
@@ -44,14 +44,14 @@ describe('Testes para a rota /matches', function () {
   });
 
   it('Deve filtrar corretamente as partidas em andamento e também as finalizadas', async function () {
-    sinon.stub(SequelizeMatches.prototype, 'findByPace').resolves(matchesMock);
+    sinon.stub(Matches, 'findAll').resolves(Matches.bulkBuild(remove));
 
     const response = await chai
       .request(app)
-      .get('/matches?finished=true');
+      .get('/matches?inProgress=true');
 
     expect(response.status).to.be.equal(200);
-    expect(response.body).to.be.deep.equal(matchesMock);
+    expect(response.body).to.be.deep.equal(remove);
   });
 
   it('Deve retornar um lista com todos os jogos corretamente', async function () {

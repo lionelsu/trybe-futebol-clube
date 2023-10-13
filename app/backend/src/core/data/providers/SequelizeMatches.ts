@@ -23,6 +23,17 @@ class SequelizeMatches implements MatchRepository {
     );
     return updatedMatch;
   }
+
+  async findByProgress(inProgress: boolean): Promise<Match[]> {
+    const matchesData = await this.matches.findAll({
+      where: { inProgress },
+      include: [
+        { model: Teams, as: 'homeTeam', attributes: ['teamName'] },
+        { model: Teams, as: 'awayTeam', attributes: ['teamName'] },
+      ],
+    });
+    return matchesData.map((match) => match.toJSON());
+  }
 }
 
 export default SequelizeMatches;

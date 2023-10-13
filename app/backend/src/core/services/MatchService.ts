@@ -15,6 +15,10 @@ class MatchService {
   async finishMatch(id: number): Promise<number> {
     return this.matchRepository.finishMatch(id);
   }
+
+  async findByProgress(progress: boolean): Promise<Match[]> {
+    return this.matchRepository.findByProgress(progress);
+  }
 }
 
 export default MatchService;

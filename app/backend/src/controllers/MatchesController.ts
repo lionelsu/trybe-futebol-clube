@@ -4,7 +4,14 @@ import MatchService from '../core/services/MatchService';
 class MatchesController {
   constructor(private readonly matchService: MatchService) {}
 
-  async findAll(_req: Request, res: Response) {
+  async findAll(req: Request, res: Response) {
+    const { inProgress } = req.query;
+
+    if (inProgress === 'true' || inProgress === 'false') {
+      const matchesData = await this.matchService.findByProgress(JSON.parse(inProgress));
+      return res.status(200).json(matchesData);
+    }
+
     const matchesData = await this.matchService.findAll();
     res.status(200).json(matchesData);
   }
