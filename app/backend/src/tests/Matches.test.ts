@@ -150,4 +150,44 @@ describe('Testes para a rota /matches', function () {
     expect(response.status).to.be.equal(201);
     expect(response.body).to.be.deep.equal({ ...newMatch, id: 1 });
   });
+
+  it('Deve retornar uma mensagem de erro caso tente criar um jogo pela rota post /matches com os id de times iguais', async function () {
+    sinon.stub(Users, 'findByPk').resolves(Users.build(authUser));
+    const jwt = new JWT();
+    const token = jwt.encrypt(authUser);
+
+    sinon.stub(Teams, 'findByPk')
+      .onFirstCall().resolves(Teams.build({ ...matchesMock[0].homeTeam, id: 1 }))
+      .onSecondCall().resolves(Teams.build({ ...matchesMock[0].awayTeam, id: 1 }));
+    sinon.stub(Matches, 'create').resolves(Matches.build({ ...newMatch, id: 1 }));
+
+    const response = await chai
+      .request(app)
+      .post('/matches')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ ...newMatch, awayTeamId: 1, homeTeamId: 1 });
+    
+    expect(response.status).to.be.equal(422);
+    expect(response.body).to.be.deep.equal({ "message": "It is not possible to create a match with two equal teams" });
+  });
+
+  it('Deve retornar uma mensagem de erro caso tente criar um jogo pela rota post /matches com os id de times que não existem no banco de dados', async function () {
+    sinon.stub(Users, 'findByPk').resolves(Users.build(authUser));
+    const jwt = new JWT();
+    const token = jwt.encrypt(authUser);
+
+    sinon.stub(Teams, 'findByPk')
+      .onFirstCall().resolves(Teams.build({ ...matchesMock[0].homeTeam, id: 0 }))
+      .onSecondCall().resolves(null);
+    sinon.stub(Matches, 'create').resolves(Matches.build({ ...newMatch, id: 1 }));
+
+    const response = await chai
+      .request(app)
+      .post('/matches')
+      .set('Authorization', `Bearer ${token}`)
+      .send(newMatch);
+    
+    expect(response.status).to.be.equal(404);
+    expect(response.body).to.be.deep.equal({ "message": "There is no team with such id!" });
+  });
 });
