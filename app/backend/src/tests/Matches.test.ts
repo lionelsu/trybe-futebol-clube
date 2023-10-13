@@ -32,6 +32,14 @@ const goals = {
   "awayTeamGoals": 1
 };
 
+const newMatch = {
+  "homeTeamId": 16,
+  "homeTeamGoals": 1,
+  "awayTeamId": 8,
+  "awayTeamGoals": 1,
+  "inProgress": true,
+};
+
 describe('Testes para a rota /matches', function () {
   afterEach(function () {
     sinon.restore();
@@ -121,5 +129,25 @@ describe('Testes para a rota /matches', function () {
     
     expect(response.status).to.be.equal(400);
     expect(response.body).to.be.deep.equal({ "message": "Match not found" });
+  });
+
+  it('Deve ser possível criar um jogo pela rota /matches', async function () {
+    sinon.stub(Users, 'findByPk').resolves(Users.build(authUser));
+    const jwt = new JWT();
+    const token = jwt.encrypt(authUser);
+
+    sinon.stub(Teams, 'findByPk')
+      .onFirstCall().resolves(Teams.build({ ...matchesMock[0].homeTeam, id: 1 }))
+      .onSecondCall().resolves(Teams.build({ ...matchesMock[0].awayTeam, id: 2 }));
+    sinon.stub(Matches, 'create').resolves(Matches.build({ ...newMatch, id: 1 }));
+
+    const response = await chai
+      .request(app)
+      .post('/matches')
+      .set('Authorization', `Bearer ${token}`)
+      .send(newMatch);
+    
+    expect(response.status).to.be.equal(201);
+    expect(response.body).to.be.deep.equal({ ...newMatch, id: 1 });
   });
 });
