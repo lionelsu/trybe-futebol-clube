@@ -4,7 +4,9 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 import { app } from '../app';
 import Matches from '../database/models/Matches';
+import SequelizeMatches from '../core/data/providers/SequelizeMatches';
 import matchesMock from './mocks/matchesMock';
+import Teams from '../database/models/Teams';
 import JWT from '../auth/JWT';
 
 chai.use(chaiHttp);
@@ -17,7 +19,7 @@ describe('Testes para a rota /matches', function () {
   })
 
   it('Deve retornar um lista com todos os jogos corretamente', async function () {
-    sinon.stub(Matches, 'findAll').resolves(Matches.bulkBuild(matchesMock));
+    sinon.stub(SequelizeMatches.prototype, 'findAll').resolves(matchesMock);
 
     const response = await chai
       .request(app)
