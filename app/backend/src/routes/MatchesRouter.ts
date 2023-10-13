@@ -19,4 +19,7 @@ matchesRouter.patch('/:id', authMiddleware, (req: Request, res: Response) =>
 matchesRouter.patch('/:id/finish', authMiddleware, (req: Request, res: Response) =>
   matchesController.finishMatch(req, res));
 
+matchesRouter.post('/', authMiddleware, (req: Request, res: Response) =>
+  matchesController.createMatch(req, res));
+
 export default matchesRouter;

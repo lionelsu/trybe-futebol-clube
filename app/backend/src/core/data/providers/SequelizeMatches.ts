@@ -42,6 +42,11 @@ class SequelizeMatches implements MatchRepository {
     );
     return updatedMatch;
   }
+
+  async createMatch(match: Omit<Match, 'id'>): Promise<Match> {
+    const newMatch = await this.matches.create(match);
+    return newMatch.toJSON();
+  }
 }
 
 export default SequelizeMatches;

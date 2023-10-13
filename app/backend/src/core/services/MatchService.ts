@@ -1,5 +1,5 @@
 import { Match } from '../entities/Match';
-import { MatchRepository } from '../data/repositories/MatchRepository';
+import { MatchData, MatchRepository } from '../data/repositories/MatchRepository';
 
 class MatchService {
   private matchRepository: MatchRepository;
@@ -22,6 +22,10 @@ class MatchService {
 
   async updateMatch(id: number, homeTeamGoals: number, awayTeamGoals: number): Promise<number> {
     return this.matchRepository.updateMatch(id, homeTeamGoals, awayTeamGoals);
+  }
+
+  async createMatch(match: MatchData): Promise<Match> {
+    return this.matchRepository.createMatch(match);
   }
 }
 
