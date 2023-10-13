@@ -13,4 +13,7 @@ const leaderBoardRouter = Router();
 leaderBoardRouter.get('/home', (req: Request, res: Response) =>
   leaderBoardController.getLeaderBoard(req, res));
 
+leaderBoardRouter.get('/away', (req: Request, res: Response) =>
+  leaderBoardController.getLeaderBoard(req, res));
+
 export default leaderBoardRouter;
