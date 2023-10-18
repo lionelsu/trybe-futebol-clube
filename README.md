@@ -77,12 +77,6 @@ Docker e Docker Compose:
       secret_admin
       ```
 
-4. Você também pode acessar a documentação da API no navegador:
-
-    ```http
-    http://127.0.0.1:3001/v1/docs/
-    ```
-
 ![partidas](/leaderboards.png)
 
 ## Rotas da API
