@@ -125,8 +125,6 @@ A regra de negocio foi implementada utilizando o `Sequelize ORM` para facilitar 
 
 A qualidade do código foi garantida por meio de testes rigorosos usando `Mocha`, `Chai`. Esses testes avaliaram minuciosamente os endpoints, serviços e funções para garantir que tudo funcionasse corretamente.
 
-Para documentar a `API`, utilizei o `Swagger`, que inclui informações sobre rotas, parâmetros e exemplos práticos.
-
 Também disponibilizei uma coleção no `Postman` para facilitar testes e interações com a `API`.
 
 Com essas etapas concluídas, estou confiante na entrega de uma `API` sólida e funcional com uma `GUI` em `ReactJs` intuitiva, pronta para atender às necessidades dos usuários.
