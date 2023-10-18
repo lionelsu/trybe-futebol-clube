@@ -12,7 +12,8 @@
     "test:debug": "DEBUG=true npm test",
     "compose:up": "cd app && docker-compose up -d --build",
     "compose:down": "cd app && docker-compose down --remove-orphans",
-    "logs": "cd app && docker-compose logs -f"
+    "logs": "cd app && docker-compose logs -f",
+    "install:all": "npm run install:apps && npm run compose:up"
   },
   "author": "Trybe",
   "devDependencies": {
