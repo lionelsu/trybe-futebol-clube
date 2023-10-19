@@ -5,7 +5,7 @@
 
 [Documentação da API no Postman](https://documenter.getpostman.com/view/30159355/2s9YR85Dtg)
 
-Futebol Clube API é uma API RESTful e um aplicativo CRUD moderno com uma interface gráfica desenvolvida em ReactJs, oferecendo funcionalidades abrangentes de CRUD para a gestão de classificação em uma equipe de Clube de Futebol. Ela inclui filtros abrangentes para obter informações sobre equipes, partidas e postagens, bem como a capacidade de finalizar e atualizar partidas. Foi desenvolvida utilizando a metodologia TDD, os princípios SOLID, POO e Arquitetura Limpa. Além disso, segue uma arquitetura em camadas (MSC), e o esquema do banco de dados utiliza o Diagrama de Entidade-Relacionamento (DER).
+Futebol Clube API é uma API RESTful e um aplicativo CRUD moderno com uma interface gráfica desenvolvida em ReactJs, oferecendo funcionalidades de CRUD para a gestão de classificação em uma equipe de Clube de Futebol. Ela inclui filtros para obter informações sobre equipes, partidas e postagens, bem como a capacidade de finalizar e atualizar partidas. Foi desenvolvida utilizando a metodologia TDD, os princípios SOLID, POO e Arquitetura Limpa. Além disso, segue uma arquitetura em camadas (MSC), e o esquema do banco de dados utiliza o Diagrama de Entidade-Relacionamento (DER).
 
 # Ferramentas Utilizadas
 
