@@ -22,7 +22,6 @@ Futebol Clube API é uma API RESTful e um aplicativo CRUD moderno com uma interf
   - Sinon
 
 - **Documentação:**
-  - Swagger
   - Postman
 
 ## Pré-Requisitos
